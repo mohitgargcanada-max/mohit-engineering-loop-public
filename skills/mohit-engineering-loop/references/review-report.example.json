@@ -1,0 +1,7 @@
+{
+  "verdict": "APPROVED",
+  "reviewer": "claude",
+  "coverage": ["Replace this example with actual inspected acceptance IDs and files"],
+  "findings": [],
+  "limitations": ["EXAMPLE ONLY: never submit this as real review evidence"]
+}

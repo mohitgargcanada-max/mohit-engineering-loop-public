@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.mel/**/*.lock
+.mel/**/*.tmp
+
+# Task records and handovers stay private (public repo)
+.mel/
+.crisp/HANDOVER.md

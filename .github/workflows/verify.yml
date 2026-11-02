@@ -1,0 +1,33 @@
+name: Verify original skill
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    steps:
+      - name: Fetch exact event commit using preinstalled GitHub CLI
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh auth setup-git
+          gh repo clone "$GITHUB_REPOSITORY" source -- --no-checkout
+          cd source
+          git fetch origin "$GITHUB_SHA"
+          git checkout --detach FETCH_HEAD
+      - name: Behavioral tests and skill validation
+        shell: bash
+        run: |
+          cd source
+          python -B -m unittest discover -s tests -v
+          python -B scripts/validate.py
